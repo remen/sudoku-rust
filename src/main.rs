@@ -2,7 +2,7 @@ use std::fmt;
 use std::fmt::Formatter;
 
 fn main() {
-    let mut sudoku: SudokuStruct = SudokuStruct { array:[
+    let mut sudoku: Sudoku = Sudoku { array:[
         0, 0, 1,  0, 0, 5,  0, 0, 0,
         8, 0, 0,  4, 0, 0,  0, 0, 0,
         0, 0, 0,  2, 0, 0,  1, 0, 9,
@@ -24,11 +24,11 @@ fn main() {
     }
 }
 
-struct SudokuStruct {
+struct Sudoku {
     array: [i32; 81]
 }
 
-impl fmt::Display for SudokuStruct {
+impl fmt::Display for Sudoku {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let mut result = String::new();
         for row in 0..9 {
@@ -50,7 +50,7 @@ impl fmt::Display for SudokuStruct {
 }
 
 
-fn solve(sudoku: &mut SudokuStruct) -> bool {
+fn solve(sudoku: &mut Sudoku) -> bool {
     if !is_legal(sudoku) {
         return false;
     }
@@ -71,11 +71,11 @@ fn solve(sudoku: &mut SudokuStruct) -> bool {
     return true; // NB: This case will be reached if the sudoku is completely filled initially
 }
 
-fn is_legal(sudoku: &SudokuStruct) -> bool {
+fn is_legal(sudoku: &Sudoku) -> bool {
     return no_duplicates_in_rows(&sudoku) && no_duplicates_in_columns(&sudoku) && no_duplicates_in_blocks(&sudoku);
 }
 
-fn no_duplicates_in_rows(sudoku: &SudokuStruct) -> bool {
+fn no_duplicates_in_rows(sudoku: &Sudoku) -> bool {
     for row in 0..9 {
         let mut has_digit_in_row = [false, false, false, false, false, false, false, false, false,];
         for col in 0..9 {
@@ -93,7 +93,7 @@ fn no_duplicates_in_rows(sudoku: &SudokuStruct) -> bool {
     return true;
 }
 
-fn no_duplicates_in_columns(sudoku: &SudokuStruct) -> bool {
+fn no_duplicates_in_columns(sudoku: &Sudoku) -> bool {
     for col in 0..9 {
         let mut has_digit_in_row = [false, false, false, false, false, false, false, false, false,];
         for row in 0..9 {
@@ -111,7 +111,7 @@ fn no_duplicates_in_columns(sudoku: &SudokuStruct) -> bool {
     return true;
 }
 
-fn no_duplicates_in_blocks(sudoku: &SudokuStruct) -> bool {
+fn no_duplicates_in_blocks(sudoku: &Sudoku) -> bool {
     for block_row in 0..3 {
         for block_col in 0..3 {
             let mut has_digit = [false, false, false, false, false, false, false, false, false,];
