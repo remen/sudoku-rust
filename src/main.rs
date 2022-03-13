@@ -51,15 +51,16 @@ impl fmt::Display for SudokuStruct {
 
 
 fn solve(sudoku: &mut SudokuStruct) -> bool {
+    if !is_legal(sudoku) {
+        return false;
+    }
     for row in 0..9 {
         for col in 0..9 {
             if sudoku.array[row * 9  + col] == 0 {
                 for value_to_try in 1..10 {
                     sudoku.array[row * 9 + col] = value_to_try;
-                    if is_legal(&sudoku) {
-                        if solve(sudoku) {
-                            return true;
-                        }
+                    if solve(sudoku) {
+                        return true;
                     }
                 }
                 sudoku.array[row * 9 + col] = 0;
@@ -67,7 +68,7 @@ fn solve(sudoku: &mut SudokuStruct) -> bool {
             };
         }
     }
-    return true;
+    return true; // NB: This case will be reached if the sudoku is completely filled initially
 }
 
 fn is_legal(sudoku: &SudokuStruct) -> bool {
