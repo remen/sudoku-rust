@@ -24,32 +24,6 @@ fn main() {
     }
 }
 
-struct Sudoku {
-    array: [i32; 81]
-}
-
-impl fmt::Display for Sudoku {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        let mut result = String::new();
-        for row in 0..9 {
-            for col in 0..9 {
-                result.push_str(self.array[row * 9 + col].to_string().as_str());
-                result.push(' ');
-                if col == 2 || col == 5 {
-                    result.push(' ');
-                    result.push(' ');
-                }
-            }
-            result.push('\n');
-            if row == 2 || row == 5 {
-                result.push('\n');
-            }
-        }
-        return f.write_str(result.as_str());
-    }
-}
-
-
 fn solve(sudoku: &mut Sudoku) -> bool {
     if !is_legal(sudoku) {
         return false;
@@ -133,4 +107,29 @@ fn no_duplicates_in_blocks(sudoku: &Sudoku) -> bool {
         }
     }
     return true;
+}
+
+struct Sudoku {
+    array: [i32; 81]
+}
+
+impl fmt::Display for Sudoku {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let mut result = String::new();
+        for row in 0..9 {
+            for col in 0..9 {
+                result.push_str(self.array[row * 9 + col].to_string().as_str());
+                result.push(' ');
+                if col == 2 || col == 5 {
+                    result.push(' ');
+                    result.push(' ');
+                }
+            }
+            result.push('\n');
+            if row == 2 || row == 5 {
+                result.push('\n');
+            }
+        }
+        return f.write_str(result.as_str());
+    }
 }
